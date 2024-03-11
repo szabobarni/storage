@@ -1,0 +1,21 @@
+id;id_store;id_row;id_column;id_shelf;name;price;quantity;min_quantity
+1;1;1;1;1;Ferrari 250 GTO;9.99;50;23
+2;1;2;4;8;Lamborghini Miura;8.49;40;17
+3;1;4;2;14;Jaguar E-Type;7.99;26;30
+4;1;5;2;6;Porsche 356;6.99;45;30
+5;2;2;2;6;Aston Martin DB5;9.49;15;20
+6;2;3;1;9;Shelby Cobra;9.49;35;14
+7;2;4;3;15;Mercedes-Benz 300SL;8.99;50;25
+8;2;5;1;17;Rolls-Royce Silver Cloud;12.99;30;10
+9;3;1;3;3;Chevrolet Corvette C1;6.49;400;20
+10;3;3;3;11;Ford GT40;9.99;48;28
+11;3;3;4;12;Bugatti Type 57;12.99;25;25
+12;3;5;2;18;Alfa Romeo Giulietta Spider;8.49;35;20
+13;4;2;3;7;Maserati 3500 GT;11.49;30;15
+14;4;3;1;9;BMW 507;10.99;40;30
+15;4;4;2;14;Cadillac Eldorado;9.79;15;20
+16;4;4;4;16;DeLorean DMC-12;8.99;25;30
+17;5;1;1;1;Lotus Elan;7.49;35;20
+18;5;2;3;7;Bentley S1 Continental;11.99;20;15
+19;5;4;2;14;Duesenberg Model J;14.49;15;10
+20;5;5;1;17;Ferrari 458 Italia;7.99;25;30
