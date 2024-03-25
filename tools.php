@@ -46,8 +46,8 @@ Class Tools
         if($truncate) {
             $mysqli->query("TRUNCATE TABLE products");
         } 
-        for($i = 0 ; $i < count($data); $i++) {
-            $a1 = $data[$i][1];
+        for($i = 0 ; $i < count($data)-1; $i++) {
+            $a1 = $data[$i][0];
             $a2 = $data[$i][1];
             $a3 = $data[$i][2];
             $a4 = $data[$i][3];
@@ -120,12 +120,6 @@ Class Tools
     }
     static function showProducts($products) {
         echo "
-        <style>
-        table, th, td {
-        border:1px solid black;
-        border-collapse: collapse;
-        }
-        </style>
         <table>
         <tr>
           <th>Products</th>
@@ -326,7 +320,7 @@ Class Tools
     }
     static function showStoragesDropdown2(array $storages) 
     {
-        $result = '<form method="post">
+        $result = '
             <label for="storages-dropdown2">storage:</label><br>
             <select id="storages-dropdown2" name="storages-dropdown2">
             <option value = "" selected></option>';
@@ -339,12 +333,12 @@ Class Tools
             }
             
         }
-        $result .= '</select>
-                    </form>';
+        $result .= '</select><br>
+                    ';
         echo $result;
     }
     static function showRowsDropdown(array $rows){
-        $result = '<form method="post">
+        $result = '
         <label for="rows-dropdown">row:</label><br>
         <select id="rows-dropdown" name="rows-dropdown">
         <option value = "" selected></option>';
@@ -357,12 +351,12 @@ Class Tools
         }
         
     }
-    $result .= '</select>
-                </form>';
+    $result .= '</select><br>
+            ';
     echo $result;
     }
     static function showCollumnsDropdown(array $collumns){
-        $result = '<form method="post">
+        $result = '
         <label for="collumns-dropdown">collumns:</label><br>
         <select id="collumns-dropdown" name="collumns-dropdown">
         <option value = "" selected></option>';
@@ -375,8 +369,8 @@ Class Tools
         }
         
     }
-    $result .= '</select>
-                </form>';
+    $result .= '</select><br>
+                ';
     echo $result;
     }
     static function showAdd($storages,$rows,$collumns){
@@ -394,12 +388,29 @@ Class Tools
           <label for="input4">min_quantity:</label><br>
           <input type="text" id="input4" name="input4"><br>
           <button type="submit" name="add" value="">Add</button>
-          <button type="submit" name="btn-back" value="">Back</button>
+          <button type="submit" name="btn-back2" value="">Back</button>
         </form>';
     }
-   static function add($mysqli,){
-        $query = "INSERT INTO products () VALUES ()";
+    static function getCollumnId($mysqli,$collumn){
+        $query = "SELECT id FROM columns WHERE name = '$collumn'";
+        return $mysqli->query($query)->fetch_assoc();
+    }
+    static function getShelfId($mysqli,$shelf){
+        $query = "SELECT id FROM shelves WHERE name = '$shelf'";
+        return $mysqli->query($query)->fetch_assoc();
+    }
+    static function getStoreId($mysqli,$store){
+        $query = "SELECT id FROM stores WHERE name LIKE '$store%'";
+        return $mysqli->query($query)->fetch_assoc();
+    }
+    static function getRowId($mysqli,$row){
+        $query = "SELECT id FROM rowss WHERE name = '$row'";
+        return $mysqli->query($query)->fetch_assoc();
+    }
+   static function add($mysqli,$store,$row,$column,$shelf,$name,$price,$quantity,$min_quantity){
+        $query = "INSERT INTO products (id_store,id_row,id_collumn,id_shelf,name,price,quantity,min_quantity) VALUES ('$store','$row','$column','$shelf','$name','$price','$quantity','$min_quantity')";
 
         $mysqli->query($query);
+        echo "New product added!";
     }
 }

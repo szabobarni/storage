@@ -6,4 +6,5 @@
 
     <!-- Styles -->
     <link href="fontawesome/css/all.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="style.css">
 </head>
