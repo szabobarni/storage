@@ -66,13 +66,9 @@ $sql = "CREATE TABLE IF NOT EXISTS products (
     id_column INT(11),
     id_shelf INT(11),
     name VARCHAR(30) NOT NULL,
-    price FLOAT(6) NOT NULL,
+    price FLOAT(6,2) NOT NULL,
     quantity INT(11) NOT NULL,
-    min_quantity INT(11) NOT NULL,
-    FOREIGN KEY (id_shelf) REFERENCES shelves(id),
-    FOREIGN KEY (id_store) REFERENCES stores(id),
-    FOREIGN KEY (id_row) REFERENCES rowss(id),
-    FOREIGN KEY (id_column) REFERENCES columns(id)
+    min_quantity INT(11) NOT NULL
 )";
 if ($conn->query($sql) === FALSE) {
     die("Error creating table: " . $conn->error);

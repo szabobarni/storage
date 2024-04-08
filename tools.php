@@ -5,12 +5,135 @@ Class Tools
     static function showCreateDatabaseButton()
     {
         echo '
-            <form method="post" action="mysqli.php">
-                <button id="btn-change" name="btn-change" title="change" value="">
+            <form method="post" action="">
+                <button id="btn-create" name="btn-create" title="create" value="">
                     Create Database
                 </button>
             </form>
         ';
+    }
+    static function create(){
+        $servername = "localhost";
+$username = "root";
+$password = null;
+$dbname = "storage";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Create database
+$sql = "CREATE DATABASE IF NOT EXISTS $dbname";
+if ($conn->query($sql) === FALSE) {
+    die("Error creating database: " . $conn->error);
+}
+
+$conn->select_db($dbname);
+
+// Create stores table
+$sql = "CREATE TABLE IF NOT EXISTS stores (
+    id INT(11) PRIMARY KEY,
+    name VARCHAR(30) NOT NULL,
+    address VARCHAR(50)
+)";
+if ($conn->query($sql) === FALSE) {
+    die("Error creating table: " . $conn->error);
+}
+
+// Create rows table
+$sql = "CREATE TABLE IF NOT EXISTS rowss (
+    id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(30)
+)";
+if ($conn->query($sql) === FALSE) {
+    die("Error creating table: " . $conn->error);
+}
+
+// Create columns table
+$sql = "CREATE TABLE IF NOT EXISTS columns (
+    id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(30)
+)";
+if ($conn->query($sql) === FALSE) {
+    die("Error creating table: " . $conn->error);
+}
+
+// Create shelves table
+$sql = "CREATE TABLE IF NOT EXISTS shelves (
+    id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(30)
+)";
+if ($conn->query($sql) === FALSE) {
+    die("Error creating table: " . $conn->error);
+}
+
+// Create products table
+$sql = "CREATE TABLE IF NOT EXISTS products (
+    id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    id_store INT(11),
+    id_row INT(11),
+    id_column INT(11),
+    id_shelf INT(11),
+    name VARCHAR(30) NOT NULL,
+    price FLOAT(6,2) NOT NULL,
+    quantity INT(11) NOT NULL,
+    min_quantity INT(11) NOT NULL
+)";
+if ($conn->query($sql) === FALSE) {
+    die("Error creating table: " . $conn->error);
+}
+
+$conn->close();
+    }
+    static function insert(){
+        $servername = "localhost";
+        $username = "root";
+        $password = null;
+        $database = "storage";
+        $mysqli = new mysqli($servername, $username, $password, $database);
+        $products = self::getCsvData('products.csv');
+        for($i = 0 ; $i < count($products)-1; $i++) {
+            $a1 = $products[$i][0];
+            $a2 = $products[$i][1];
+            $a3 = $products[$i][2];
+            $a4 = $products[$i][3];
+            $a5 = $products[$i][4];
+            $a6 = $products[$i][5];
+            $a7 = $products[$i][6];
+            $a8 = $products[$i][7];
+            $a9 = $products[$i][8];
+            $mysqli->query("INSERT INTO products (id ,id_store, id_row, id_column, id_shelf, name, price, quantity, min_quantity) VALUES ('$a1', '$a2', '$a3','$a4','$a5','$a6','$a7','$a8','$a9')");
+        }
+        $stores = self::getCsvData2('stores.csv');
+        for ($i=0; $i < count($stores); $i++) { 
+            $a1 = $stores[$i][0];
+            $a2 = $stores[$i][1];
+            $a3 = $stores[$i][2];
+            $mysqli->query("INSERT INTO stores(id,name,address) VALUES ('$a1', '$a2', '$a3')");
+        }
+        $rows = self::getCsvData2('rows.csv');
+        for ($i=0; $i < count($rows); $i++) { 
+            $a1 = $rows[$i][0];
+            $a2 = $rows[$i][1];
+            $mysqli->query("INSERT INTO rowss(id,name) VALUES ('$a1', '$a2')");
+        }
+        $columns = self::getCsvData2('collumns.csv');
+        for ($i=0; $i < count($columns); $i++) { 
+            $a1 = $columns[$i][0];
+            $a2 = $columns[$i][1];
+            $mysqli->query("INSERT INTO columns(id,name) VALUES ('$a1', '$a2')");
+        }
+        $shelves = self::getCsvData2('shelves.csv');
+        for ($i=0; $i < count($shelves); $i++) { 
+            $a1 = $shelves[$i][0];
+            $a2 = $shelves[$i][1];
+            $mysqli->query("INSERT INTO shelves(id,name) VALUES ('$a1', '$a2')");
+        }
+        
     }
     static function getCsvData($file){
         $array = [];
@@ -408,7 +531,7 @@ Class Tools
         return $mysqli->query($query)->fetch_assoc();
     }
    static function add($mysqli,$store,$row,$column,$shelf,$name,$price,$quantity,$min_quantity){
-        $query = "INSERT INTO products (id_store,id_row,id_collumn,id_shelf,name,price,quantity,min_quantity) VALUES ('$store','$row','$column','$shelf','$name','$price','$quantity','$min_quantity')";
+        $query = "INSERT INTO products (id_store,id_row,id_column,id_shelf,name,price,quantity,min_quantity) VALUES ('$store','$row','$column','$shelf','$name','$price','$quantity','$min_quantity')";
 
         $mysqli->query($query);
         echo "New product added!";

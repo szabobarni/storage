@@ -1,12 +1,17 @@
 <?php
- $servername = "localhost";
- $username = "root";
- $password = null;
- $database = "storage";
- $mysqli = new mysqli($servername, $username, $password, $database);
- include 'html-head.php';
 require_once "tools.php";
-//tools::showCreateDatabaseButton();
+tools::showCreateDatabaseButton();
+if (isset($_POST['btn-create'])){
+  tools::create();
+  tools::insert();
+}
+$servername = "localhost";
+$username = "root";
+$password = null;
+$database = "storage";
+$mysqli = new mysqli($servername, $username, $password, $database);
+
+include 'html-head.php';
 $storages = tools::getStorages();
 $rows = tools::getRows();
 $collumns = tools::getCollumns();
