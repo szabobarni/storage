@@ -2,6 +2,21 @@
 
 Class Tools
 {
+    static function pdfButton(){
+        echo '
+            <form method="post" action="pdf.php">
+                <button id="btn-pdf" name="btn-pdf" title="pdf" value="">
+                    Create PDF
+                </button>
+            </form>
+        ';
+    }
+    static function getAll($mysqli): array
+    {
+        $query = "SELECT * FROM products";
+
+        return $mysqli->query($query)->fetch_all(MYSQLI_ASSOC);
+    }
     static function showCreateDatabaseButton()
     {
         echo '
@@ -179,7 +194,7 @@ $conn->close();
             $a7 = $data[$i][6];
             $a8 = $data[$i][7];
             $a9 = $data[$i][8];
-            $mysqli->query("INSERT INTO products (id ,id_store, id_row, id_collumn, id_shelf, name, price, quantity, min_quantity) VALUES ('$a1', '$a2', '$a3','$a4','$a5','$a6','$a7','$a8','$a9')");
+            $mysqli->query("INSERT INTO products (id ,id_store, id_row, id_column, id_shelf, name, price, quantity, min_quantity) VALUES ('$a1', '$a2', '$a3','$a4','$a5','$a6','$a7','$a8','$a9')");
         }
     }
     static function getStorages() {
@@ -333,7 +348,7 @@ $conn->close();
           <label for="input3">quantity</label><br>
           <input type="text" id="input3" name="input3" value="'.self::getQuantity($mysqli,$name)['quantity'].'"><br>
           <button type="submit" name="edit" value="'.$name.'">Edit</button>
-          <button type="submit" name="btn-back" value="">Back</button>
+          <button type="submit" name="btn-back" value="'.$name.'">Back</button>
         </form>';
     }
     static function getPrice($mysqli,$name){
@@ -379,7 +394,7 @@ $conn->close();
             </tr>
         </table>
         <form method='post'>
-        <button type='submit' name='btn-back' value=''>Back</button>
+        <button type='submit' name='btn-back' value='.$name.'>Back</button>
         </form>
         ";
     }

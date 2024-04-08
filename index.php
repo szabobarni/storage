@@ -28,6 +28,7 @@ echo "<body>";
     tools::showSearch();
     tools::showStockButton();
     tools::showAddButton();
+    tools::pdfButton();
     ?>
   </div>
 </div>
